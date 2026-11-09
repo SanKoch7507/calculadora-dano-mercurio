@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Pericial de Valoração do Dano por Mercúrio (Hg) - Espelho Oficial CSF/MPF</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        input[type="range"] {
+            accent-color: #10b981;
+        }
+        .clean-number::-webkit-inner-spin-button,
+        .clean-number::-webkit-outer-spin-button {
+            opacity: 1;
+        }
+        @media print {
+            body {
+                background: #ffffff !important;
+                color: #0f172a !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Header -->
+        <header class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl backdrop-blur-sm">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="space-y-1.5">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold uppercase tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Calibração Exata com a Calculadora Oficial CSF / MPF / ENSP-Fiocruz
+                        </div>
+                        <a href="https://miningcalculator.conservation-strategy.org/calculator" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 hover:bg-sky-500/20 border border-sky-500/30 text-sky-300 text-xs font-medium transition">
+                            <span>Abrir Calculadora Oficial CSF</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </a>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                        Simulador Pericial de Valoração do Dano por Mercúrio (Hg<sup>0</sup>)
+                    </h1>
+                    <p class="text-slate-400 text-sm sm:text-base max-w-4xl">
+                        Espelhamento matemático exato da <strong>Calculadora de Impactos do Garimpo (CSF)</strong> para garimpo de aluvião (cava de 2,5 m) na Amazônia Brasileira, com uso de retorta (<span class="mono text-slate-200">2,6 kg Hg : 1 kg Au</span> | <span class="mono text-slate-200">13%</span> água | <span class="mono text-slate-200">8,8%</span> solo | <span class="mono text-slate-200">33%</span> ar | <span class="mono text-slate-200">45%</span> reutilizado).
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 self-start md:self-center no-print">
+                    <button id="btnReset" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-medium border border-slate-700 transition flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Restaurar Padrão CSF
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Grid: Left Controls (5 cols) & Right Outputs (7 cols) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- LEFT COLUMN: INPUT PARAMETERS -->
+            <div class="lg:col-span-5 space-y-6">
+
+                <!-- 1. Manual Mercury Quantity & Physical Conversion Card -->
+                <div class="bg-slate-900 border-2 border-emerald-500/40 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute -top-12 -right-12 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <div class="flex items-center justify-between mb-3 gap-2 flex-wrap">
+                        <label for="inputMass" class="text-base font-bold text-white flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                            </svg>
+                            1. Quantidade de Mercúrio (Hg<sup>0</sup>)
+                        </label>
+                        <!-- Unit Toggle (kg vs g vs mL) -->
+                        <div class="inline-flex rounded-xl bg-slate-800 p-1 border border-slate-700">
+                            <button type="button" id="unitKg" class="px-2.5 py-1 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 shadow">
+                                Quilos (kg)
+                            </button>
+                            <button type="button" id="unitG" class="px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">
+                                Gramas (g)
+                            </button>
+                            <button type="button" id="unitMl" title="Volume líquido considerando densidade d = 13,534 g/cm³ a 20°C" class="px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">
+                                Volume (mL)
+                            </button>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-400 mb-3">
+                        Insira a massa ou volume líquido apreendido/investigado (densidade oficial do Hg líquido a 20&nbsp;°C: <span class="text-slate-200 mono">13,534 g/cm³</span>):
+                    </p>
+
+                    <!-- Direct Numeric Input Box -->
+                    <div class="relative flex items-center mb-3">
+                        <input
+                            type="number"
+                            id="inputMass"
+                            value="600"
+                            min="0.001"
+                            step="any"
+                            placeholder="Digite a quantidade..."
+                            class="clean-number w-full bg-slate-950 border-2 border-slate-700 focus:border-emerald-400 focus:ring-4 focus:ring-emerald-500/20 rounded-xl py-3.5 pl-4 pr-20 text-2xl font-extrabold text-white mono transition outline-none"
+                        />
+                        <span id="unitBadge" class="absolute right-4 px-2.5 py-1 rounded-lg bg-slate-800 text-emerald-400 font-bold mono text-sm border border-slate-700">
+                            kg
+                        </span>
+                    </div>
+
+                    <!-- Physical Equivalences Box (ABIN/FBSP/MMA 2025 Packaging Data) -->
+                    <div class="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-slate-950/90 border border-slate-800 mb-4 text-center">
+                        <div>
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Volume Líquido</span>
+                            <span id="physVolLabel" class="text-xs font-bold text-sky-300 mono">44,33 L</span>
+                        </div>
+                        <div class="border-x border-slate-800 px-1">
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block" title="Frasco PET clandestino padrão de 1 kg (~73,89 mL) citado pela ABIN (2025)">Frascos "Pitchula" (1 kg)</span>
+                            <span id="physPitchulaLabel" class="text-xs font-bold text-amber-300 mono">600,00 unid.</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block" title="Cilindro metálico padrão internacional (Flask = 34,5 kg / 2,55 L)">Cilindros (34,5 kg)</span>
+                            <span id="physFlaskLabel" class="text-xs font-bold text-emerald-300 mono">17,391 cil.</span>
+                        </div>
+                    </div>
+
+                    <!-- Synchronized Slider -->
+                    <div class="space-y-1.5 mb-4">
+                        <div class="flex justify-between text-xs text-slate-400">
+                            <span>Ajuste rápido por controle deslizante:</span>
+                            <span id="conversionLabel" class="mono text-slate-300 font-medium">= 600.000,00 g</span>
+                        </div>
+                        <input
+                            type="range"
+                            id="sliderMass"
+                            min="0.1"
+                            max="1000"
+                            step="0.5"
+                            value="600"
+                            class="w-full h-2 bg-slate-800 rounded-lg cursor-pointer"
+                        />
+                    </div>
+
+                    <!-- Quick Preset Buttons -->
+                    <div class="space-y-2">
+                        <span class="text-xs font-medium text-slate-400 block">Atalhos periciais e unidades de fracionamento (CSF / ABIN, 2025):</span>
+                        <div class="grid grid-cols-3 sm:grid-cols-6 gap-1.5">
+                            <button type="button" data-kg="1" title="1 Pitchula PET (~73,9 mL = 1 kg de Hg)" class="preset-btn px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-semibold text-slate-300 mono transition">
+                                1 kg
+                            </button>
+                            <button type="button" data-kg="2.6" title="Padrão CSF para extração de 1 kg (1.000 g) de ouro" class="preset-btn px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-semibold text-slate-300 mono transition">
+                                2,6 kg (1kg Au)
+                            </button>
+                            <button type="button" data-kg="5" class="preset-btn px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-semibold text-slate-300 mono transition">
+                                5 kg
+                            </button>
+                            <button type="button" data-kg="34.5" title="1 Cilindro de Aço Padrão Internacional (Flask = 34,5 kg)" class="preset-btn px-2 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-semibold text-slate-300 mono transition">
+                                34,5 kg (1 Cil.)
+                            </button>
+                            <button type="button" data-kg="600" title="Caso pericial de 600 kg de Hg (= 230.769 g de Ouro no PDF da CSF)" class="preset-btn px-2 py-1.5 rounded-lg bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-700/60 text-[11px] font-semibold text-emerald-300 mono transition col-span-2">
+                                600 kg (PDF CSF)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Escopo de Valoração na Calculadora CSF (3 Modalidades Exatas do PDF) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-base font-bold text-white flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                            2. Escopo de Imputação (Espelho do Relatório CSF)
+                        </h2>
+                    </div>
+
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        O relatório da Calculadora CSF apresenta três níveis de agregação para os <strong id="scopeGoldGramsText" class="text-amber-300 mono">230.769 g</strong> de ouro viabilizados. Selecione qual nível deseja destacar como Valor Principal no laudo:
+                    </p>
+
+                    <div class="space-y-2.5">
+                        <!-- Option A: Only Mercury Contamination (Page 4 of CSF PDF) -->
+                        <button type="button" id="scopeHgOnly" class="w-full p-3.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 text-left transition">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-sky-400 uppercase tracking-wider">1. Estrito: Apenas Contaminação por Mercúrio (Pág. 4 CSF)</span>
+                                <span id="badgeValHgOnly" class="text-xs font-extrabold text-white mono">R$ 179.050.251,00</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">
+                                Soma exclusivamente Doenças Cardiovasculares (<span class="mono">R$ 261,7 mil/kg Hg</span>), Remediação do Solo (<span class="mono">R$ 33,7 mil/kg Hg</span>) e Perda de QI em Fetos (<span class="mono">R$ 2,96 mil/kg Hg</span>).
+                            </p>
+                        </button>
+
+                        <!-- Option B: Total Socio-Environmental Impacts (Page 1 Blue Value of CSF PDF - DEFAULT) -->
+                        <button type="button" id="scopeSocioEnv" class="w-full p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/20 text-left transition">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-emerald-400 uppercase tracking-wider">2. Impactos Socioambientais Totais (Pág. 1 Azul CSF)</span>
+                                <span id="badgeValSocioEnv" class="text-xs font-extrabold text-emerald-300 mono">R$ 297.155.056,00</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 mt-1">
+                                Soma Contaminação por Mercúrio (<strong>60,25%</strong>) + Desmatamento da Lavra (<strong>28,10%</strong>) + Assoreamento dos Rios (<strong>11,65%</strong>).
+                            </p>
+                        </button>
+
+                        <!-- Option C: Total Monetary Damage including Illicit Gold (Page 1 Red Value of CSF PDF) -->
+                        <button type="button" id="scopeTotalWithGold" class="w-full p-3.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 text-left transition">
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">3. Dano Total c/ Ouro Extraído (Pág. 1 Vermelho CSF)</span>
+                                <span id="badgeValWithGold" class="text-xs font-extrabold text-rose-300 mono">R$ 465.609.521,00</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">
+                                Soma os Impactos Socioambientais + Ressarcimento integral do Ouro Extraído Ilegalmente (<span class="mono">R$ 729,97/g Au</span> na cotação API CSF).
+                            </p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. Parâmetros Metodológicos CSF & Mercado Clandestino -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <h2 class="text-base font-bold text-white flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-sky-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        3. Parâmetros Técnicos CSF e Mercado Clandestino
+                    </h2>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                            <div class="flex justify-between mb-1">
+                                <label for="inputRatio" class="text-slate-400 font-medium">Relação Hg : Ouro (CSF)</label>
+                                <span id="ratioBadge" class="mono font-bold text-amber-400">2,60 : 1</span>
+                            </div>
+                            <input
+                                type="range"
+                                id="inputRatio"
+                                min="0.8"
+                                max="4.0"
+                                step="0.05"
+                                value="2.60"
+                                class="w-full h-1.5 bg-slate-800 rounded-lg cursor-pointer"
+                            />
+                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-900">
+                                <span class="text-[11px] text-slate-400">Arredondar gramas de Au (igual ao input CSF):</span>
+                                <input type="checkbox" id="chkRoundGold" checked class="accent-emerald-500 h-4 w-4 rounded cursor-pointer" />
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                            <label for="selectMethylBasis" class="block text-slate-400 font-medium mb-1">
+                                Taxa de Metilação Fluvial (MeHg):
+                            </label>
+                            <select id="selectMethylBasis" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-2 py-1.5 text-[11px] text-slate-200 outline-none">
+                                <option value="0.11" selected>Motor de Cálculo CSF (11% do Hg na água = 1,43% total → 8.580 g MeHg)</option>
+                                <option value="0.03">Texto Descritivo CSF (3% do Hg na água = 0,39% total → 2.340 g MeHg)</option>
+                            </select>
+                            <p class="text-[10px] text-slate-500 mt-1 leading-tight">
+                                Na Pág. 4/5 do PDF da CSF, o texto cita 3%, mas a fórmula interna (<span class="mono">methyladPercent_conservative</span>) aplica <strong>11%</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Clandestine Price Selector -->
+                    <div class="pt-2 border-t border-slate-800">
+                        <label for="selectMarketPreset" class="block text-xs text-slate-300 font-medium mb-1.5">
+                            Preço Comercial Clandestino do Mercúrio (ABIN/FBSP/MMA, 2025):
+                        </label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div class="relative flex items-center">
+                                <span class="absolute left-3 text-xs text-slate-400 mono">R$</span>
+                                <input
+                                    type="number"
+                                    id="inputMarketPrice"
+                                    value="2200"
+                                    min="50"
+                                    step="50"
+                                    class="w-full bg-slate-950 border border-slate-700 rounded-lg py-1.5 pl-8 pr-12 text-xs font-bold text-white mono focus:border-emerald-400 outline-none"
+                                />
+                                <span class="absolute right-3 text-[11px] text-slate-400 mono">/ kg</span>
+                            </div>
+                            <select id="selectMarketPreset" class="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200 outline-none">
+                                <option value="1100">Fronteira Guiana (~R$ 1.100/kg)</option>
+                                <option value="1650">Rota Bolívia/RO (~R$ 1.650/kg)</option>
+                                <option value="2200" selected>Média Varejo Clandestino (R$ 2.200/kg)</option>
+                                <option value="3600">Interior Garimpo / TIY (R$ 3.600/kg)</option>
+                                <option value="6000">Pico em Garimpo Isolado (R$ 6.000/kg)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 4. Live API Integration: BCB Exchange Rate + GoldAPI/MetalpriceAPI + World Bank Inflation -->
+                    <div class="pt-3 border-t border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between gap-2">
+                            <span class="text-xs font-bold text-sky-400 uppercase tracking-wider flex items-center gap-1.5">
+                                <span id="apiStatusDot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                                4. Integração API (Câmbio BCB + Ouro + Inflação)
+                            </span>
+                            <div class="flex gap-1.5">
+                                <button type="button" id="btnFetchLiveApis" class="px-2.5 py-1 rounded-lg bg-sky-500/20 hover:bg-sky-500/30 border border-sky-500/40 text-sky-300 text-[11px] font-bold transition flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                    </svg>
+                                    <span id="btnFetchApiText">Consultar APIs Agora</span>
+                                </button>
+                                <button type="button" id="btnLockPdfSnapshot" title="Restaurar os índices exatos do PDF da CSF (09/11/2026)" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-[11px] font-medium transition">
+                                    Padrão PDF CSF
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-2 text-xs">
+                            <div class="p-2 rounded-lg bg-slate-950/90 border border-slate-800">
+                                <label for="inputUsdBrl" class="text-[10px] text-slate-400 block">Câmbio BCB (R$/US$)</label>
+                                <input type="number" id="inputUsdBrl" value="5.1305" step="0.0001" min="1" class="w-full bg-transparent text-white font-bold mono text-xs outline-none mt-0.5" />
+                            </div>
+                            <div class="p-2 rounded-lg bg-slate-950/90 border border-slate-800">
+                                <label for="inputGoldBrlG" class="text-[10px] text-slate-400 block">Ouro Spot (R$/g Au)</label>
+                                <input type="number" id="inputGoldBrlG" value="729.97" step="0.01" min="10" class="w-full bg-transparent text-amber-300 font-bold mono text-xs outline-none mt-0.5" />
+                            </div>
+                            <div class="p-2 rounded-lg bg-slate-950/90 border border-slate-800">
+                                <label for="inputInflationPct" class="text-[10px] text-slate-400 block" title="Inflação acumulada calculada a partir do Banco Mundial (base 2022)">Inflação Acum. (%)</label>
+                                <input type="number" id="inputInflationPct" value="19.14" step="0.01" min="0" class="w-full bg-transparent text-emerald-300 font-bold mono text-xs outline-none mt-0.5" />
+                            </div>
+                        </div>
+
+                        <!-- Optional API Keys Accordion for GoldAPI.io / MetalpriceAPI -->
+                        <details class="text-[11px] text-slate-400 bg-slate-950/50 rounded-lg p-2 border border-slate-800/80">
+                            <summary class="cursor-pointer font-medium text-slate-300 select-none">
+                                Configurar Chaves Opcionais (GoldAPI.io / MetalpriceAPI)
+                            </summary>
+                            <div class="mt-2 space-y-2">
+                                <p class="text-[10px] text-slate-400">
+                                    O botão <strong>"Consultar APIs Agora"</strong> já consulta gratuitamente a PTAX do <strong>Banco Central do Brasil (Olinda)</strong>, a inflação do <strong>Banco Mundial</strong> e a cotação pública do ouro (<span class="mono">XAU/USD</span>) sem exigir chave. Caso possua chave própria da <em>GoldAPI.io</em> ou <em>MetalpriceAPI</em>, insira abaixo:
+                                </p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <input type="password" id="inputGoldApiKey" placeholder="Chave GoldAPI.io (goldapi-...)" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[11px] text-white mono outline-none" />
+                                    <input type="password" id="inputMetalpriceKey" placeholder="Chave MetalpriceAPI" class="bg-slate-900 border border-slate-700 rounded px-2 py-1 text-[11px] text-white mono outline-none" />
+                                </div>
+                            </div>
+                        </details>
+                        <div id="apiStatusMessage" class="text-[10px] text-slate-400 mono">
+                            Status: Calibrado com a cotação do relatório PDF da CSF (Ouro: R$ 729,97/g | Câmbio ref.: R$ 5,1305/US$).
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: RESULTS, EXACT CSF BREAKDOWN & LEGAL REPORT -->
+            <div class="lg:col-span-7 space-y-6">
+
+                <!-- Direct CSF Input Equivalence Banner -->
+                <div class="bg-gradient-to-r from-amber-950/60 via-slate-900 to-slate-900 border-2 border-amber-500/40 rounded-2xl p-4 sm:p-5 shadow-xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="space-y-1">
+                            <div class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-400">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Parâmetro de Entrada Espelhado na Calculadora Oficial CSF
+                            </div>
+                            <p class="text-xs text-slate-300">
+                                Aluvião (cava 2,5 m) | Amazônia Brasileira | <span class="mono text-emerald-300">Com uso de retorta</span> | <span class="mono text-amber-300">Unidade: Quantidade de ouro</span>:
+                            </p>
+                        </div>
+                        <div class="bg-slate-950/90 border border-amber-500/40 rounded-xl px-4 py-2 text-right shrink-0">
+                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Quantidade de Ouro CSF:</span>
+                            <span id="csfGoldInputGrams" class="text-xl sm:text-2xl font-extrabold text-amber-400 mono">230.769 g de Au</span>
+                            <span id="csfGoldInputKg" class="text-[11px] text-slate-400 mono block">(= 230,77 kg de Au | R$ 168.454.465)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top KPI Cards -->
+                <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+                    <!-- Main Damage KPI (7 cols) -->
+                    <div class="sm:col-span-7 bg-gradient-to-br from-emerald-950/90 via-slate-900 to-slate-900 border-2 border-emerald-500/50 rounded-2xl p-5 shadow-xl flex flex-col justify-between">
+                        <div class="flex items-center justify-between gap-2">
+                            <span id="kpiTitleLabel" class="text-xs font-bold uppercase tracking-wider text-emerald-400">
+                                Valor Total em Impactos Socioambientais (CSF)
+                            </span>
+                            <span id="kpiScopeBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                Impactos Socioambientais
+                            </span>
+                        </div>
+                        <div class="my-3">
+                            <div id="kpiTotalDamage" class="text-3xl sm:text-4xl font-extrabold text-white mono tracking-tight break-words">
+                                R$ 297.155.056,00
+                            </div>
+                            <div id="kpiPerGram" class="text-xs text-slate-300 mt-1 mono">
+                                R$ 495,26 por grama de Hg (ou R$ 1.287,67 por grama de Au)
+                            </div>
+                            <div id="kpiSubSummary" class="text-[11px] text-emerald-300/90 mt-1 mono">
+                                Mercúrio: R$ 179.050.251 | Desmatamento: R$ 83.498.557 | Assoreamento: R$ 34.606.248
+                            </div>
+                        </div>
+                        <div class="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                            <span class="text-slate-400">Venda clandestina do Hg: <strong id="kpiMarketValue" class="text-slate-200 mono">R$ 1.320.000,00</strong></span>
+                            <span id="kpiMultiplier" class="text-amber-400 font-bold mono">Dano 225x maior que a venda</span>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Physical & Trophic KPI (5 cols) -->
+                    <div class="sm:col-span-5 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col justify-between space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold uppercase tracking-wider text-sky-400">
+                                    Partição Ambiental (Pág. 4 CSF)
+                                </span>
+                                <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-sky-500/10 text-sky-300 border border-sky-500/20 mono">
+                                    Com Retorta
+                                </span>
+                            </div>
+                            <div id="kpiRiverHg" class="text-xl font-extrabold text-white mono mt-1">
+                                78.000,00 g nos Rios (13%)
+                            </div>
+                            <span id="kpiSoilAirHg" class="text-[11px] text-slate-400 mono block mt-0.5">
+                                Solo (8,8%): 52.800 g | Ar (33%): 198.000 g
+                            </span>
+                        </div>
+
+                        <div class="pt-3 border-t border-slate-800">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-bold uppercase tracking-wider text-rose-400">
+                                    Metilmercúrio na Cadeia Trófica
+                                </span>
+                                <span id="kpiMethylPctTag" class="text-[10px] font-semibold px-2 py-0.5 rounded bg-rose-500/10 text-rose-300 border border-rose-500/20 mono">
+                                    Pág. 5 CSF (11% de 13%)
+                                </span>
+                            </div>
+                            <div id="kpiMethylated" class="text-lg font-bold text-rose-300 mono mt-0.5">
+                                8.579,99 g de MeHg
+                            </div>
+                            <span id="kpiNonMonetarySummary" class="text-[11px] text-slate-400 block leading-tight mt-0.5">
+                                Expõe <strong class="text-slate-200 mono">7.419 pessoas</strong> (17 infartos | 102 casos de hipertensão | Hg capilar médio: 10,27 µg/g).
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Non-Monetary Impacts Table Card (Exact Mirror of Page 5 of CSF PDF) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Impactos Não Monetários (Espelho Exato da Página 5 do PDF da CSF)
+                        </h3>
+                        <span class="text-[11px] text-slate-400 mono">
+                            População no raio de 100 km: <strong>188.496 hab.</strong> | Hg médio no cabelo: <strong>10,27 µg/g</strong>
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs">
+                        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                            <span class="text-[10px] font-bold uppercase text-amber-400 block">Área Desmatada Total</span>
+                            <span id="nmHectaresTotal" class="text-sm font-extrabold text-white mono mt-0.5 block">1.605,35 ha</span>
+                            <span id="nmHectaresDirect" class="text-[11px] text-slate-400 leading-tight block mt-1">Cava direta: 133,78 ha (1,73 kg Au/ha).</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                            <span class="text-[10px] font-bold uppercase text-sky-400 block">Sedimentos Movimentados</span>
+                            <span id="nmSediments" class="text-sm font-extrabold text-white mono mt-0.5 block">3.344.478,26 m³</span>
+                            <span class="text-[11px] text-slate-400 leading-tight block mt-1">Erosão e assoreamento (cava média de 2,5 m).</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                            <span class="text-[10px] font-bold uppercase text-rose-400 block">População Exposta (Peixe)</span>
+                            <span id="nmPopExposed" class="text-sm font-extrabold text-white mono mt-0.5 block">7.419 pessoa(s)</span>
+                            <span class="text-[11px] text-slate-400 leading-tight block mt-1">52% dos nascidos vivos com perda &gt; 2 pts QI.</span>
+                        </div>
+                        <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800">
+                            <span class="text-[10px] font-bold uppercase text-purple-400 block">Casos Cardiovasculares</span>
+                            <span id="nmCardioCases" class="text-sm font-extrabold text-white mono mt-0.5 block">17 Infartos | 102 Hipert.</span>
+                            <span class="text-[11px] text-slate-400 leading-tight block mt-1">Probabilidade 69% e 35% maior na população exposta.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Monetary Breakdown Card (Exact Mirror of Pages 1, 2, 3 & 4 of CSF PDF) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <h3 class="text-base font-bold text-white">
+                                Decomposição Monetária Oficial (Páginas 1 a 4 do Relatório CSF)
+                            </h3>
+                            <p class="text-xs text-slate-400">
+                                Valores individuais exatos por subcategoria da Calculadora de Impactos do Garimpo
+                            </p>
+                        </div>
+                        <span id="chartMassTag" class="self-start sm:self-center px-3 py-1 rounded-lg bg-slate-800 border border-slate-700 text-xs font-bold text-slate-200 mono">
+                            600 kg Hg → 230.769 g Au
+                        </span>
+                    </div>
+
+                    <div class="space-y-4">
+
+                        <!-- Bloco 1: Contaminação por Mercúrio (Pág. 4 CSF = R$ 179.050.251 para 600 kg Hg) -->
+                        <div class="p-4 rounded-xl bg-slate-950/70 border border-sky-500/30 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-sm font-extrabold text-sky-400 uppercase tracking-wider">A. Contaminação por Mercúrio (Pág. 4 CSF)</span>
+                                    <span class="text-xs text-slate-400 block">Impacto químico direto sobre a saúde humana (raio de 100 km) e remediação de solo (8,8% deposição)</span>
+                                </div>
+                                <div class="text-right">
+                                    <span id="valGroupHg" class="text-base font-extrabold text-white mono block">R$ 179.050.251,00</span>
+                                    <span class="text-[11px] text-sky-400 mono">R$ 298.417,38 / kg de Hg</span>
+                                </div>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                                <div id="barGroupHg" class="h-full bg-gradient-to-r from-sky-600 to-sky-400 rounded-full transition-all duration-300" style="width: 60.25%"></div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                                <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">1. Doenças Cardiovasculares (87,71%)</span>
+                                    <span id="valHgCardio" class="font-bold text-rose-300 mono text-sm">R$ 157.046.321,00</span>
+                                </div>
+                                <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">2. Remediação do Solo (11,30%)</span>
+                                    <span id="valHgSoil" class="font-bold text-emerald-300 mono text-sm">R$ 20.229.415,00</span>
+                                </div>
+                                <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">3. Perda de QI em Fetos (0,99%)</span>
+                                    <span id="valHgIq" class="font-bold text-amber-300 mono text-sm">R$ 1.774.515,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloco 2: Desmatamento (Pág. 2 CSF = R$ 83.498.557 para 230.769 g Au) -->
+                        <div id="blockDeforestation" class="p-4 rounded-xl bg-slate-950/70 border border-emerald-500/30 space-y-3 transition-opacity duration-300">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-sm font-extrabold text-emerald-400 uppercase tracking-wider">B. Desmatamento da Lavra Viabilizada (Pág. 2 CSF)</span>
+                                    <span class="text-xs text-slate-400 block">Reflorestamento, carbono, produtos florestais, bioprospecção, recreação e cultura/espécies</span>
+                                </div>
+                                <div class="text-right">
+                                    <span id="valGroupDeforest" class="text-base font-extrabold text-white mono block">R$ 83.498.557,00</span>
+                                    <span class="text-[11px] text-emerald-400 mono">R$ 139.164,40 / kg de Hg</span>
+                                </div>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                                <div id="barGroupDeforest" class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all duration-300" style="width: 28.10%"></div>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                                <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[10px]">Reflorestamento</span>
+                                    <span id="valDefReflor" class="font-bold text-slate-200 mono">R$ 32.106.187,00</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[10px]">Carbono (400 tCO₂/ha)</span>
+                                    <span id="valDefCarbon" class="font-bold text-slate-200 mono">R$ 26.085.713,00</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[10px]">Produtos Florestais</span>
+                                    <span id="valDefProd" class="font-bold text-slate-200 mono">R$ 22.449.434,00</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[10px]">Bioprospecção</span>
+                                    <span id="valDefBio" class="font-bold text-slate-200 mono">R$ 2.002.525,00</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[10px]">Recreação</span>
+                                    <span id="valDefRec" class="font-bold text-slate-200 mono">R$ 852.523,00</span>
+                                </div>
+                                <div class="p-2 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[10px]">Cultura e Espécies</span>
+                                    <span id="valDefCult" class="font-bold text-slate-200 mono">R$ 2.175,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloco 3: Assoreamento dos Rios (Pág. 3 CSF = R$ 34.606.248 para 230.769 g Au) -->
+                        <div id="blockSiltation" class="p-4 rounded-xl bg-slate-950/70 border border-amber-500/30 space-y-3 transition-opacity duration-300">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="text-sm font-extrabold text-amber-400 uppercase tracking-wider">C. Assoreamento dos Rios (Pág. 3 CSF)</span>
+                                    <span class="text-xs text-slate-400 block">Dragagem de sedimentos no rio, aterramento de cava e perda de controle de erosão</span>
+                                </div>
+                                <div class="text-right">
+                                    <span id="valGroupSilt" class="text-base font-extrabold text-white mono block">R$ 34.606.248,00</span>
+                                    <span class="text-[11px] text-amber-400 mono">R$ 57.677,14 / kg de Hg</span>
+                                </div>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-900 rounded-full overflow-hidden border border-slate-800">
+                                <div id="barGroupSilt" class="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all duration-300" style="width: 11.65%"></div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-1 text-xs">
+                                <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">1. Dragagem de Sedimentos</span>
+                                    <span id="valSiltDredge" class="font-bold text-slate-200 mono text-sm">R$ 18.967.048,00</span>
+                                </div>
+                                <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">2. Aterramento de Cava</span>
+                                    <span id="valSiltPit" class="font-bold text-slate-200 mono text-sm">R$ 12.994.616,00</span>
+                                </div>
+                                <div class="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800">
+                                    <span class="text-slate-400 block text-[11px]">3. Erosão</span>
+                                    <span id="valSiltErosion" class="font-bold text-slate-200 mono text-sm">R$ 2.644.584,00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bloco 4: Valor do Ouro Extraído Ilegalmente (Pág. 1 CSF = R$ 168.454.465) -->
+                        <div id="blockGoldValue" class="p-4 rounded-xl bg-slate-950/70 border border-rose-500/30 flex justify-between items-center opacity-50 transition-opacity duration-300">
+                            <div>
+                                <span class="text-sm font-extrabold text-rose-400 uppercase tracking-wider">D. Valor do Ouro Extraído Ilegalmente (Pág. 1 CSF)</span>
+                                <span class="text-xs text-slate-400 block">Cotação integrada da Calculadora CSF (GoldAPI/MetalpriceAPI + BCB: R$ 729,97 / grama de Au)</span>
+                            </div>
+                            <div class="text-right">
+                                <span id="valGroupGold" class="text-base font-extrabold text-rose-300 mono block">R$ 168.454.465,00</span>
+                                <span id="tagGoldIncluded" class="text-[11px] text-slate-400 mono">Exibido em separado (Escopo 2)</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Automated Technical Note / Legal Report Generator -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div>
+                            <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                Minuta de Memória de Cálculo e Fundamentação Técnico-Pericial (100% Alinhada ao PDF CSF)
+                            </h3>
+                            <p class="text-xs text-slate-400">
+                                Reproduz exatamente todos os valores monetários e não-monetários do relatório PDF da Calculadora CSF, integrando as referências da pasta do projeto.
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 self-start sm:self-center no-print">
+                            <select id="reportModeSelect" class="bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold text-slate-200 outline-none">
+                                <option value="complete" selected>Nota Técnica Completa (Espelho CSF + Bibliografia)</option>
+                                <option value="compact">Memória de Cálculo Sintética (Resumo)</option>
+                            </select>
+                            <button
+                                type="button"
+                                id="btnCopyReport"
+                                class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs transition flex items-center gap-2 shadow-lg shadow-emerald-500/10"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                                </svg>
+                                <span id="copyBtnText">Copiar Texto</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <textarea
+                        id="reportTextarea"
+                        rows="16"
+                        readonly
+                        class="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-xs sm:text-sm text-slate-300 font-mono leading-relaxed focus:outline-none focus:border-emerald-500/50 resize-y"
+                    ></textarea>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic (Calibrated to the Exact CSF Report Benchmark for 230,769 g Au) -->
+    <script>
+        // Reference Benchmark from Official CSF Report PDF (for 230,769 g of Gold = 600 kg of Mercury at 2.6:1, Alluvial, 2.5m pit, With Retort, Brazilian Amazon)
+        const REF_GOLD_G = 230769.0;
+        const HG_DENSITY_G_CM3 = 13.534;
+        const FLASK_WEIGHT_KG = 34.5;
+
+        // Exact Monetary Values in the CSF Report for REF_GOLD_G (230,769 g Au):
+        // 1. Mercury Contamination (Total = R$ 179.050.251)
+        const REF_HG_CARDIO = 157046321.0;
+        const REF_HG_SOIL   = 20229415.0;
+        const REF_HG_IQ     = 1774515.0;
+        const REF_HG_TOTAL  = REF_HG_CARDIO + REF_HG_SOIL + REF_HG_IQ; // 179,050,251
+
+        // 2. Deforestation (Total = R$ 83.498.557)
+        const REF_DEF_REFLOR = 32106187.0;
+        const REF_DEF_CARBON = 26085713.0;
+        const REF_DEF_PROD   = 22449434.0;
+        const REF_DEF_BIO    = 2002525.0;
+        const REF_DEF_REC    = 852523.0;
+        const REF_DEF_CULT   = 2175.0;
+        const REF_DEF_TOTAL  = REF_DEF_REFLOR + REF_DEF_CARBON + REF_DEF_PROD + REF_DEF_BIO + REF_DEF_REC + REF_DEF_CULT; // 83,498,557
+
+        // 3. Silting of Rivers (Total = R$ 34.606.248)
+        const REF_SILT_DREDGE  = 18967048.0;
+        const REF_SILT_PIT     = 12994616.0;
+        const REF_SILT_EROSION = 2644584.0;
+        const REF_SILT_TOTAL   = REF_SILT_DREDGE + REF_SILT_PIT + REF_SILT_EROSION; // 34,606,248
+
+        // 4. Total Socio-Environmental Impacts (Page 1 Blue = R$ 297.155.056)
+        const REF_SOCIOENV_TOTAL = REF_HG_TOTAL + REF_DEF_TOTAL + REF_SILT_TOTAL; // 297,155,056
+
+        // 5. Illegally Extracted Gold Value (Page 1 Gold = R$ 168.454.465)
+        const REF_GOLD_VALUE = 168454465.0;
+        const REF_GOLD_PRICE_BRL_G = REF_GOLD_VALUE / REF_GOLD_G; // R$ 729.9698616... / g Au
+        const REF_USD_BRL = 5.130471;
+        const REF_INFLATION_PCT = 19.14;
+        const REF_MACRO_MULTIPLIER = REF_USD_BRL * (1.0 + REF_INFLATION_PCT / 100.0);
+        const TROY_OUNCE_GRAMS = 31.1034768;
+
+        // 6. Non-Monetary Reference Values for 230,769 g Au (Page 5 of CSF PDF)
+        const REF_POP_EXPOSED = 7419.0;
+        const REF_INFARCT_CASES = 17.0;
+        const REF_HYPERT_CASES = 102.0;
+
+        // Application State
+        const state = {
+            massKg: 600.0,           // Default set to 600 kg so user can immediately verify the 100% match with the CSF PDF
+            unit: 'kg',              // 'kg', 'g', or 'ml'
+            scope: 'socioenv',       // 'hg_only' (R$ 179.05M), 'socioenv' (R$ 297.15M - Default), or 'total_with_gold' (R$ 465.61M)
+            hgAuRatio: 2.60,         // 2.6 kg Hg per 1 kg Au
+            roundGoldGrams: true,    // Rounds gold grams to integer (e.g., 230,769 g) to match CSF web input behavior
+            methylationRate: 0.11,   // 0.11 (CSF calculation engine = 8,579.99 g MeHg) or 0.03 (CSF text = 2,340 g MeHg)
+            marketPricePerKg: 2200,  // Clandestine Hg price (R$/kg)
+            usdBrl: REF_USD_BRL,     // BCB Exchange rate (R$/US$)
+            goldPriceBrlG: REF_GOLD_PRICE_BRL_G, // Gold spot price in R$/g
+            inflationPct: REF_INFLATION_PCT,     // Cumulative World Bank inflation since 2022 (%)
+            reportMode: 'complete'
+        };
+
+        // DOM Elements
+        const inputMass = document.getElementById('inputMass');
+        const sliderMass = document.getElementById('sliderMass');
+        const unitKgBtn = document.getElementById('unitKg');
+        const unitGBtn = document.getElementById('unitG');
+        const unitMlBtn = document.getElementById('unitMl');
+        const unitBadge = document.getElementById('unitBadge');
+        const conversionLabel = document.getElementById('conversionLabel');
+        const physVolLabel = document.getElementById('physVolLabel');
+        const physPitchulaLabel = document.getElementById('physPitchulaLabel');
+        const physFlaskLabel = document.getElementById('physFlaskLabel');
+        const presetBtns = document.querySelectorAll('.preset-btn');
+
+        const scopeGoldGramsText = document.getElementById('scopeGoldGramsText');
+        const scopeHgOnlyBtn = document.getElementById('scopeHgOnly');
+        const scopeSocioEnvBtn = document.getElementById('scopeSocioEnv');
+        const scopeTotalWithGoldBtn = document.getElementById('scopeTotalWithGold');
+        const badgeValHgOnly = document.getElementById('badgeValHgOnly');
+        const badgeValSocioEnv = document.getElementById('badgeValSocioEnv');
+        const badgeValWithGold = document.getElementById('badgeValWithGold');
+
+        const inputRatio = document.getElementById('inputRatio');
+        const ratioBadge = document.getElementById('ratioBadge');
+        const chkRoundGold = document.getElementById('chkRoundGold');
+        const selectMethylBasis = document.getElementById('selectMethylBasis');
+        const inputMarketPrice = document.getElementById('inputMarketPrice');
+        const selectMarketPreset = document.getElementById('selectMarketPreset');
+        const reportModeSelect = document.getElementById('reportModeSelect');
+
+        // API Integration DOM Elements
+        const inputUsdBrl = document.getElementById('inputUsdBrl');
+        const inputGoldBrlG = document.getElementById('inputGoldBrlG');
+        const inputInflationPct = document.getElementById('inputInflationPct');
+        const btnFetchLiveApis = document.getElementById('btnFetchLiveApis');
+        const btnFetchApiText = document.getElementById('btnFetchApiText');
+        const btnLockPdfSnapshot = document.getElementById('btnLockPdfSnapshot');
+        const inputGoldApiKey = document.getElementById('inputGoldApiKey');
+        const inputMetalpriceKey = document.getElementById('inputMetalpriceKey');
+        const apiStatusMessage = document.getElementById('apiStatusMessage');
+        const apiStatusDot = document.getElementById('apiStatusDot');
+
+        // Output Elements
+        const csfGoldInputGrams = document.getElementById('csfGoldInputGrams');
+        const csfGoldInputKg = document.getElementById('csfGoldInputKg');
+
+        const kpiTitleLabel = document.getElementById('kpiTitleLabel');
+        const kpiScopeBadge = document.getElementById('kpiScopeBadge');
+        const kpiTotalDamage = document.getElementById('kpiTotalDamage');
+        const kpiPerGram = document.getElementById('kpiPerGram');
+        const kpiSubSummary = document.getElementById('kpiSubSummary');
+        const kpiMarketValue = document.getElementById('kpiMarketValue');
+        const kpiMultiplier = document.getElementById('kpiMultiplier');
+
+        const kpiRiverHg = document.getElementById('kpiRiverHg');
+        const kpiSoilAirHg = document.getElementById('kpiSoilAirHg');
+        const kpiMethylPctTag = document.getElementById('kpiMethylPctTag');
+        const kpiMethylated = document.getElementById('kpiMethylated');
+        const kpiNonMonetarySummary = document.getElementById('kpiNonMonetarySummary');
+
+        const nmHectaresTotal = document.getElementById('nmHectaresTotal');
+        const nmHectaresDirect = document.getElementById('nmHectaresDirect');
+        const nmSediments = document.getElementById('nmSediments');
+        const nmPopExposed = document.getElementById('nmPopExposed');
+        const nmCardioCases = document.getElementById('nmCardioCases');
+
+        const chartMassTag = document.getElementById('chartMassTag');
+        const valGroupHg = document.getElementById('valGroupHg');
+        const barGroupHg = document.getElementById('barGroupHg');
+        const valHgCardio = document.getElementById('valHgCardio');
+        const valHgSoil = document.getElementById('valHgSoil');
+        const valHgIq = document.getElementById('valHgIq');
+
+        const blockDeforestation = document.getElementById('blockDeforestation');
+        const valGroupDeforest = document.getElementById('valGroupDeforest');
+        const barGroupDeforest = document.getElementById('barGroupDeforest');
+        const valDefReflor = document.getElementById('valDefReflor');
+        const valDefCarbon = document.getElementById('valDefCarbon');
+        const valDefProd = document.getElementById('valDefProd');
+        const valDefBio = document.getElementById('valDefBio');
+        const valDefRec = document.getElementById('valDefRec');
+        const valDefCult = document.getElementById('valDefCult');
+
+        const blockSiltation = document.getElementById('blockSiltation');
+        const valGroupSilt = document.getElementById('valGroupSilt');
+        const barGroupSilt = document.getElementById('barGroupSilt');
+        const valSiltDredge = document.getElementById('valSiltDredge');
+        const valSiltPit = document.getElementById('valSiltPit');
+        const valSiltErosion = document.getElementById('valSiltErosion');
+
+        const blockGoldValue = document.getElementById('blockGoldValue');
+        const valGroupGold = document.getElementById('valGroupGold');
+        const tagGoldIncluded = document.getElementById('tagGoldIncluded');
+
+        const reportTextarea = document.getElementById('reportTextarea');
+        const btnCopyReport = document.getElementById('btnCopyReport');
+        const copyBtnText = document.getElementById('copyBtnText');
+        const btnReset = document.getElementById('btnReset');
+
+        // Formatters
+        const fmtBRL = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        const fmtBRLInt = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+
+        const fmtNum = new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 3
+        });
+
+        const fmtDec2 = new Intl.NumberFormat('pt-BR', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        // Update Unit UI
+        function setUnit(newUnit) {
+            if (state.unit === newUnit) return;
+            state.unit = newUnit;
+
+            const activeClass = 'px-2.5 py-1 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 shadow';
+            const inactiveClass = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+
+            unitKgBtn.className = newUnit === 'kg' ? activeClass : inactiveClass;
+            unitGBtn.className = newUnit === 'g' ? activeClass : inactiveClass;
+            unitMlBtn.className = newUnit === 'ml' ? activeClass : inactiveClass;
+
+            if (newUnit === 'kg') {
+                unitBadge.textContent = 'kg';
+                inputMass.value = Number(state.massKg.toFixed(4));
+                sliderMass.min = 0.1;
+                sliderMass.max = 1000;
+                sliderMass.step = 0.5;
+                sliderMass.value = Math.min(1000, state.massKg);
+            } else if (newUnit === 'g') {
+                unitBadge.textContent = 'g';
+                const grams = state.massKg * 1000;
+                inputMass.value = Number(grams.toFixed(2));
+                sliderMass.min = 10;
+                sliderMass.max = 1000000;
+                sliderMass.step = 100;
+                sliderMass.value = Math.min(1000000, grams);
+            } else {
+                unitBadge.textContent = 'mL';
+                const ml = (state.massKg * 1000) / HG_DENSITY_G_CM3;
+                inputMass.value = Number(ml.toFixed(2));
+                sliderMass.min = 1;
+                sliderMass.max = 100000;
+                sliderMass.step = 10;
+                sliderMass.value = Math.min(100000, ml);
+            }
+            calculateAndRender();
+        }
+
+        // Update Scope Buttons UI
+        function setScope(newScope) {
+            state.scope = newScope;
+            const inactiveBtn = 'w-full p-3.5 rounded-xl border border-slate-800 bg-slate-950/60 hover:bg-slate-800/60 text-left transition';
+            scopeHgOnlyBtn.className = newScope === 'hg_only'
+                ? 'w-full p-3.5 rounded-xl border-2 border-sky-500 bg-sky-950/20 text-left transition'
+                : inactiveBtn;
+            scopeSocioEnvBtn.className = newScope === 'socioenv'
+                ? 'w-full p-3.5 rounded-xl border-2 border-emerald-500 bg-emerald-950/20 text-left transition'
+                : inactiveBtn;
+            scopeTotalWithGoldBtn.className = newScope === 'total_with_gold'
+                ? 'w-full p-3.5 rounded-xl border-2 border-rose-500 bg-rose-950/20 text-left transition'
+                : inactiveBtn;
+            calculateAndRender();
+        }
+
+        // Main Calculation & Render
+        function calculateAndRender() {
+            const massKg = Math.max(0, state.massKg);
+            const massG = massKg * 1000;
+            const volMl = massG / HG_DENSITY_G_CM3;
+            const volL = volMl / 1000;
+            const pitchulas = massKg;
+            const flasks = massKg / FLASK_WEIGHT_KG;
+
+            // Gold Grams Calculation (CSF Unit of Analysis: "Quantidade de ouro")
+            const rawGoldGrams = state.hgAuRatio > 0 ? (massG / state.hgAuRatio) : 0;
+            const goldGrams = state.roundGoldGrams ? Math.round(rawGoldGrams) : rawGoldGrams;
+            const goldKg = goldGrams / 1000;
+
+            // Scaling factor relative to CSF Reference Report (230,769 g of Au)
+            const scaleAuPhysical = goldGrams / REF_GOLD_G;
+            // For Mercury-specific impacts, if user changes hgAuRatio away from 2.6, Hg impacts scale with actual Hg mass (goldGrams * hgAuRatio)
+            const effectiveHgGrams = goldGrams * state.hgAuRatio;
+            const scaleHgPhysical = effectiveHgGrams / (REF_GOLD_G * 2.6);
+
+            // Dynamic Macroeconomic Multiplier (BCB Exchange Rate * World Bank Cumulative Inflation since 2022)
+            // When locked to the CSF PDF snapshot (usdBrl = REF_USD_BRL, inflationPct = REF_INFLATION_PCT), macroMultiplier === 1.000000
+            const currentMacroFactor = state.usdBrl * (1.0 + state.inflationPct / 100.0);
+            const macroMultiplier = currentMacroFactor / REF_MACRO_MULTIPLIER;
+
+            const scaleAu = scaleAuPhysical * macroMultiplier;
+            const scaleHg = scaleHgPhysical * macroMultiplier;
+
+            // 1. Exact CSF Mercury Contamination Subcomponents (Page 4 of CSF PDF)
+            const costHgCardio = REF_HG_CARDIO * scaleHg;
+            const costHgSoil   = REF_HG_SOIL * scaleHg;
+            const costHgIq     = REF_HG_IQ * scaleHg;
+            const costHgTotal  = costHgCardio + costHgSoil + costHgIq;
+
+            // 2. Exact CSF Deforestation Subcomponents (Page 2 of CSF PDF)
+            const costDefReflor = REF_DEF_REFLOR * scaleAu;
+            const costDefCarbon = REF_DEF_CARBON * scaleAu;
+            const costDefProd   = REF_DEF_PROD * scaleAu;
+            const costDefBio    = REF_DEF_BIO * scaleAu;
+            const costDefRec    = REF_DEF_REC * scaleAu;
+            const costDefCult   = REF_DEF_CULT * scaleAu;
+            const costDefTotal  = costDefReflor + costDefCarbon + costDefProd + costDefBio + costDefRec + costDefCult;
+
+            // 3. Exact CSF River Siltation Subcomponents (Page 3 of CSF PDF)
+            const costSiltDredge  = REF_SILT_DREDGE * scaleAu;
+            const costSiltPit     = REF_SILT_PIT * scaleAu;
+            const costSiltErosion = REF_SILT_EROSION * scaleAu;
+            const costSiltTotal   = costSiltDredge + costSiltPit + costSiltErosion;
+
+            // 4. Aggregates (Page 1 of CSF PDF)
+            const costSocioEnvTotal = costHgTotal + costDefTotal + costSiltTotal;
+            const costGoldExtracted = goldGrams * state.goldPriceBrlG;
+            const costTotalWithGold = costSocioEnvTotal + costGoldExtracted;
+
+            // Selected Headline Total based on Scope
+            let selectedTotal = costSocioEnvTotal;
+            if (state.scope === 'hg_only') {
+                selectedTotal = costHgTotal;
+            } else if (state.scope === 'total_with_gold') {
+                selectedTotal = costTotalWithGold;
+            }
+
+            const damagePerGramHg = massG > 0 ? (selectedTotal / massG) : 0;
+            const damagePerGramAu = goldGrams > 0 ? (selectedTotal / goldGrams) : 0;
+
+            // Non-Monetary Impacts (Exact CSF Formulas from Page 4 & Page 5)
+            // Sediments moved: ((goldGrams / 0.4) * 8 / 2.76) * 2
+            const sedimentsM3 = ((goldGrams / 0.4) * 8.0 / 2.76) * 2.0;
+            // Direct pit area (ha) for 2.5m depth: sedimentsM3 / 2.5 / 10000
+            const hectaresDirect = sedimentsM3 / 2.5 / 10000.0;
+            // Total deforestation with spillover (12x):
+            const hectaresTotal = hectaresDirect * 12.0;
+            // Environmental partitioning of Hg (With Retort - Page 4 Infographic):
+            // 13% Water, 8.8% Soil, 33% Air, 45% Reused
+            const riverHgG = effectiveHgGrams * 0.13;
+            const soilHgG  = effectiveHgGrams * 0.088;
+            const airHgG   = effectiveHgGrams * 0.33;
+            const meHgG    = riverHgG * state.methylationRate; // 11% in CSF engine (8,579.99 g) or 3% in text (2,340.00 g)
+            const meHgEngineG = riverHgG * 0.11;
+            const meHgTextG   = riverHgG * 0.03;
+
+            const popExposed = Math.round(REF_POP_EXPOSED * scaleHgPhysical);
+            const infarctCases = Math.max(0, Math.round(REF_INFARCT_CASES * scaleHgPhysical));
+            const hypertCases = Math.max(0, Math.round(REF_HYPERT_CASES * scaleHgPhysical));
+
+            // Clandestine Market Comparison
+            const commercialValue = massKg * state.marketPricePerKg;
+            const ratioMultiplier = commercialValue > 0 ? Math.round(selectedTotal / commercialValue) : 0;
+            const hgToGoldCostPct = costGoldExtracted > 0 ? ((commercialValue / costGoldExtracted) * 100) : 0;
+
+            // Update Physical Labels
+            if (state.unit === 'kg') {
+                conversionLabel.textContent = `= ${fmtDec2.format(massG)} g (${fmtDec2.format(volMl)} mL)`;
+            } else if (state.unit === 'g') {
+                conversionLabel.textContent = `= ${fmtNum.format(massKg)} kg (${fmtDec2.format(volMl)} mL)`;
+            } else {
+                conversionLabel.textContent = `= ${fmtNum.format(massKg)} kg (${fmtDec2.format(massG)} g)`;
+            }
+
+            physVolLabel.textContent = volL >= 1 ? `${fmtDec2.format(volL)} L` : `${fmtDec2.format(volMl)} mL`;
+            physPitchulaLabel.textContent = `${fmtDec2.format(pitchulas)} unid.`;
+            physFlaskLabel.textContent = `${fmtNum.format(flasks)} cil.`;
+
+            // Update Scope Badges
+            scopeGoldGramsText.textContent = `${fmtNum.format(goldGrams)} g`;
+            badgeValHgOnly.textContent = fmtBRL.format(costHgTotal);
+            badgeValSocioEnv.textContent = fmtBRL.format(costSocioEnvTotal);
+            badgeValWithGold.textContent = fmtBRL.format(costTotalWithGold);
+
+            // Update CSF Banner
+            csfGoldInputGrams.textContent = `${fmtNum.format(goldGrams)} g de Au`;
+            csfGoldInputKg.textContent = `(= ${fmtDec2.format(goldKg)} kg de Au | Ouro extraído: ${fmtBRLInt.format(costGoldExtracted)})`;
+
+            // Update Main KPI Card
+            if (state.scope === 'hg_only') {
+                kpiTitleLabel.textContent = 'Contaminação por Mercúrio (Pág. 4 CSF)';
+                kpiScopeBadge.textContent = '1. Estrito (Apenas Hg)';
+                kpiScopeBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-sky-500/20 text-sky-300 border border-sky-500/30';
+                kpiSubSummary.textContent = `Cardiovascular: ${fmtBRLInt.format(costHgCardio)} | Solo: ${fmtBRLInt.format(costHgSoil)} | QI Fetal: ${fmtBRLInt.format(costHgIq)}`;
+                blockDeforestation.classList.add('opacity-40');
+                blockSiltation.classList.add('opacity-40');
+                blockGoldValue.classList.add('opacity-40');
+                tagGoldIncluded.textContent = 'Não incluído no Escopo 1';
+                tagGoldIncluded.className = 'text-[11px] text-slate-400 mono';
+            } else if (state.scope === 'socioenv') {
+                kpiTitleLabel.textContent = 'Valor Total em Impactos Socioambientais (Pág. 1 CSF)';
+                kpiScopeBadge.textContent = '2. Socioambiental CSF';
+                kpiScopeBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+                kpiSubSummary.textContent = `Mercúrio: ${fmtBRLInt.format(costHgTotal)} | Desmatamento: ${fmtBRLInt.format(costDefTotal)} | Assoreamento: ${fmtBRLInt.format(costSiltTotal)}`;
+                blockDeforestation.classList.remove('opacity-40');
+                blockSiltation.classList.remove('opacity-40');
+                blockGoldValue.classList.add('opacity-40');
+                tagGoldIncluded.textContent = 'Exibido em separado (Escopo 2)';
+                tagGoldIncluded.className = 'text-[11px] text-slate-400 mono';
+            } else {
+                kpiTitleLabel.textContent = 'Dano Total em Valores Monetários (Pág. 1 CSF)';
+                kpiScopeBadge.textContent = '3. Impactos + Ouro Ilegal';
+                kpiScopeBadge.className = 'px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30';
+                kpiSubSummary.textContent = `Impactos Socioambientais: ${fmtBRLInt.format(costSocioEnvTotal)} + Ouro Extraído: ${fmtBRLInt.format(costGoldExtracted)}`;
+                blockDeforestation.classList.remove('opacity-40');
+                blockSiltation.classList.remove('opacity-40');
+                blockGoldValue.classList.remove('opacity-40');
+                tagGoldIncluded.textContent = 'Incluído no Dano Total (Escopo 3)';
+                tagGoldIncluded.className = 'text-[11px] text-rose-400 mono font-bold';
+            }
+
+            kpiTotalDamage.textContent = fmtBRL.format(selectedTotal);
+            kpiPerGram.textContent = `Equivalente a ${fmtBRL.format(damagePerGramHg)}/g de Hg (ou ${fmtBRL.format(damagePerGramAu)}/g de Au)`;
+            kpiMarketValue.textContent = fmtBRL.format(commercialValue);
+            kpiMultiplier.textContent = `Dano ${ratioMultiplier.toLocaleString('pt-BR')}x maior que a venda`;
+
+            // Update Secondary Physical & Trophic Card
+            kpiRiverHg.textContent = `${fmtDec2.format(riverHgG)} g nos Rios (13%)`;
+            kpiSoilAirHg.textContent = `Solo (8,8%): ${fmtDec2.format(soilHgG)} g | Ar (33%): ${fmtDec2.format(airHgG)} g`;
+            kpiMethylPctTag.textContent = state.methylationRate === 0.11 ? 'Pág. 5 CSF (11% de 13%)' : 'Texto Pág. 4 CSF (3% de 13%)';
+            kpiMethylated.textContent = `${fmtDec2.format(meHgG)} g de MeHg`;
+            kpiNonMonetarySummary.innerHTML = `Expõe <strong class="text-slate-200 mono">${popExposed.toLocaleString('pt-BR')} pessoa(s)</strong> (${infarctCases} infartos | ${hypertCases} hipertensão | Hg capilar: 10,27 µg/g).`;
+
+            // Update Non-Monetary Impacts Grid (Page 5 of CSF PDF)
+            nmHectaresTotal.textContent = `${fmtDec2.format(hectaresTotal)} ha`;
+            nmHectaresDirect.textContent = `Cava direta: ${fmtDec2.format(hectaresDirect)} ha (1,73 kg Au/ha).`;
+            nmSediments.textContent = `${fmtDec2.format(sedimentsM3)} m³`;
+            nmPopExposed.textContent = `${popExposed.toLocaleString('pt-BR')} pessoa(s)`;
+            nmCardioCases.textContent = `${infarctCases} Infartos | ${hypertCases} Hipert.`;
+
+            chartMassTag.textContent = `${fmtNum.format(massKg)} kg Hg → ${fmtNum.format(goldGrams)} g Au`;
+
+            // Update Monetary Breakdown Blocks
+            valGroupHg.textContent = fmtBRL.format(costHgTotal);
+            valHgCardio.textContent = fmtBRL.format(costHgCardio);
+            valHgSoil.textContent = fmtBRL.format(costHgSoil);
+            valHgIq.textContent = fmtBRL.format(costHgIq);
+
+            valGroupDeforest.textContent = fmtBRL.format(costDefTotal);
+            valDefReflor.textContent = fmtBRL.format(costDefReflor);
+            valDefCarbon.textContent = fmtBRL.format(costDefCarbon);
+            valDefProd.textContent = fmtBRL.format(costDefProd);
+            valDefBio.textContent = fmtBRL.format(costDefBio);
+            valDefRec.textContent = fmtBRL.format(costDefRec);
+            valDefCult.textContent = fmtBRL.format(costDefCult);
+
+            valGroupSilt.textContent = fmtBRL.format(costSiltTotal);
+            valSiltDredge.textContent = fmtBRL.format(costSiltDredge);
+            valSiltPit.textContent = fmtBRL.format(costSiltPit);
+            valSiltErosion.textContent = fmtBRL.format(costSiltErosion);
+
+            valGroupGold.textContent = fmtBRL.format(costGoldExtracted);
+
+            // Generate Report Text (100% aligned with CSF PDF + Scientific Articles)
+            const scopeTitleReport = state.scope === 'hg_only'
+                ? 'ESCOPO 1 - ESTRITO: APENAS CONTAMINAÇÃO POR MERCÚRIO (Pág. 4 do Relatório CSF)'
+                : state.scope === 'socioenv'
+                    ? 'ESCOPO 2 - VALOR TOTAL EM IMPACTOS SOCIOAMBIENTAIS (Mercúrio + Desmatamento + Assoreamento - Pág. 1 do Relatório CSF)'
+                    : 'ESCOPO 3 - DANO TOTAL EM VALORES MONETÁRIOS (Impactos Socioambientais + Valor do Ouro Extraído Ilegalmente - Pág. 1 do Relatório CSF)';
+
+            if (state.reportMode === 'compact') {
+                reportTextarea.value =
+`MEMÓRIA DE CÁLCULO PERICIAL SINTÉTICA - VALORAÇÃO DE DANO POR MERCÚRIO (Hg)
+Metodologia Oficial: Calculadora de Impactos do Garimpo (CSF / MPF / ENSP-Fiocruz) - https://miningcalculator.conservation-strategy.org/
+
+1. PARÂMETROS DE ENTRADA E CONVERSÃO EM OURO (PADRÃO CONSERVADOR CSF):
+- Massa de Mercúrio Analisada (M_Hg): ${fmtNum.format(massKg)} kg (${fmtDec2.format(massG)} g | Volume: ${fmtDec2.format(volMl)} mL = ${fmtDec2.format(volL)} L).
+- Unidade de Análise Equivalente na CSF (Razão ${fmtDec2.format(state.hgAuRatio)}:1, Aluvião, Cava 2,5 m, Com Uso de Retorta): ${fmtNum.format(goldGrams)} gramas de ouro (${fmtDec2.format(goldKg)} kg de Au).
+- Escopo de Imputação Selecionado: ${scopeTitleReport}.
+
+2. IMPACTOS NÃO MONETÁRIOS (PÁGINA 5 DO RELATÓRIO CSF):
+- Produção de ouro viabilizada: ${fmtDec2.format(goldKg)} kg de Au (1,73 kg de Au / ha de cava direta).
+- Área impactada pelo desmatamento: ${fmtDec2.format(hectaresDirect)} ha diretos e ${fmtDec2.format(hectaresTotal)} ha totais (incluindo transbordamento 12x).
+- Volume de sedimentos movimentado: ${fmtDec2.format(sedimentsM3)} m³.
+- Partição do Mercúrio (Com Retorta): 13% despejados nos rios (${fmtDec2.format(riverHgG)} g), 8,8% no solo (${fmtDec2.format(soilHgG)} g), 33% no ar (${fmtDec2.format(airHgG)} g) e 45% reutilizados.
+- Metilmercúrio na cadeia trófica (MeHg): ${fmtDec2.format(meHgEngineG)} g de MeHg (cálculo interno CSF a 11% do Hg fluvial) [ou ${fmtDec2.format(meHgTextG)} g a 3%].
+- Impactos Epidemiológicos (Raio de 100 km = 188.496 hab.): ${popExposed.toLocaleString('pt-BR')} pessoa(s) expostas ao risco via consumo de peixes; nível médio de Hg capilar de 10,27 µg/g; 52% dos nascidos vivos com perda de QI > 2 pontos; ${infarctCases} pessoa(s) com risco de infarto agudo do miocárdio e ${hypertCases} pessoa(s) com risco de hipertensão arterial.
+
+3. IMPACTOS MONETÁRIOS DETALHADOS (PÁGINAS 1 A 4 DO RELATÓRIO CSF):
+A) CONTAMINAÇÃO POR MERCÚRIO: ${fmtBRL.format(costHgTotal)}
+   - Doenças cardiovasculares: ${fmtBRL.format(costHgCardio)}
+   - Remediação do solo: ${fmtBRL.format(costHgSoil)}
+   - Perda de QI em fetos: ${fmtBRL.format(costHgIq)}
+B) DESMATAMENTO (${fmtDec2.format(hectaresTotal)} ha): ${fmtBRL.format(costDefTotal)}
+   - Reflorestamento: ${fmtBRL.format(costDefReflor)} | Carbono: ${fmtBRL.format(costDefCarbon)} | Produtos florestais: ${fmtBRL.format(costDefProd)}
+   - Bioprospecção: ${fmtBRL.format(costDefBio)} | Recreação: ${fmtBRL.format(costDefRec)} | Cultura e Espécies: ${fmtBRL.format(costDefCult)}
+C) ASSOREAMENTO DOS RIOS (${fmtDec2.format(sedimentsM3)} m³): ${fmtBRL.format(costSiltTotal)}
+   - Dragagem de sedimentos: ${fmtBRL.format(costSiltDredge)} | Aterramento de cava: ${fmtBRL.format(costSiltPit)} | Erosão: ${fmtBRL.format(costSiltErosion)}
+--------------------------------------------------------------------------------
+- VALOR TOTAL EM IMPACTOS SOCIOAMBIENTAIS (A + B + C): ${fmtBRL.format(costSocioEnvTotal)}
+- VALOR DO OURO EXTRAÍDO ILEGALMENTE (${fmtNum.format(goldGrams)} g Au): ${fmtBRL.format(costGoldExtracted)}
+- DANO TOTAL EM VALORES MONETÁRIOS (Impactos + Ouro): ${fmtBRL.format(costTotalWithGold)}
+- VALOR IMPUTADO NESTE LAUDO (${kpiScopeBadge.textContent}): ${fmtBRL.format(selectedTotal)} (${fmtBRL.format(damagePerGramHg)}/g de Hg).`;
+            } else {
+                reportTextarea.value =
+`NOTA TÉCNICA / MEMÓRIA DE CÁLCULO PERICIAL - VALORAÇÃO DO DANO SOCIOAMBIENTAL E DE SAÚDE PÚBLICA DECORRENTE DO FORNECIMENTO ILEGAL DE MERCÚRIO (Hg⁰) PARA GARIMPO
+
+1. PROTOCOLO METODOLÓGICO ADOTADO (CALCULADORA DE IMPACTOS DO GARIMPO - CSF / MPF / ENSP-FIOCRUZ)
+1.1. A presente valoração reproduz com exatidão matemática o modelo econométrico e epidemiológico oficial da Calculadora de Impactos do Garimpo (https://miningcalculator.conservation-strategy.org/calculator), desenvolvida pelo Conservation Strategy Fund (CSF) em parceria com o Ministério Público Federal (MPF) e pesquisadores da Escola Nacional de Saúde Pública da Fundação Oswaldo Cruz (ENSP/Fiocruz) (GASPARINETTI et al., 2021, 2024; BAKKER et al., 2021).
+1.2. Conforme diretriz metodológica recomendada pelos desenvolvedores da plataforma para quantificar o dano causado pelo fornecimento ilegal de mercúrio, parametrizou-se a simulação no contexto médio da Amazônia Brasileira, tipologia de garimpo de aluvião (cava de 2,5 m de profundidade média), com:
+   a) Unidade de Análise ("Quantidade de Ouro"): conversão da massa de mercúrio comercializada/apreendida (M_Hg = ${fmtNum.format(massKg)} kg) na quantidade de ouro cuja extração é viabilizada pelo insumo, mediante a relação padrão da CSF de ${fmtDec2.format(state.hgAuRatio)} kg de mercúrio para cada 1,00 kg de ouro (M_Au = ${fmtNum.format(goldGrams)} gramas de ouro = ${fmtDec2.format(goldKg)} kg de Au);
+   b) Premissa Conservadora ("Com Uso de Retorta"): assume-se conservadoramente (in dubio pro reo) o uso de retorta na queima da amálgama, hipótese na qual 45% do mercúrio é recuperado/reutilizado, isentando o cálculo da parcela de intoxicação aguda ocupacional de garimpeiros, restando a dispersão ambiental inevitável de 13% nos corpos hídricos (${fmtDec2.format(riverHgG)} g), 8,8% no solo superficial (${fmtDec2.format(soilHgG)} g) e 33% emitidos para a atmosfera (${fmtDec2.format(airHgG)} g).
+
+2. DIMENSIONAMENTO FÍSICO-QUÍMICO E IMPACTOS NÃO MONETÁRIOS (PÁGINAS 4 E 5 DO RELATÓRIO CSF)
+2.1. Massa e Volume do Lote de Mercúrio (Hg⁰): ${fmtNum.format(massKg)} kg (${fmtDec2.format(massG)} g), ocupando um volume líquido de ${fmtDec2.format(volMl)} mL (${fmtDec2.format(volL)} litros, d = 13,534 g/cm³), o que equivale a ${fmtDec2.format(pitchulas)} garrafas PET fracionadas tipo "pitchula" (1 kg) ou ${fmtNum.format(flasks)} cilindros industriais de aço de 34,5 kg (ABIN; FBSP; MMA, 2025, p. 26-36).
+2.2. Produção de Ouro Viabilizada e Movimentação Física da Lavra:
+   - Produção total de ouro ilegal viabilizada: ${fmtDec2.format(goldKg)} kg de Au (${fmtNum.format(goldGrams)} g de Au);
+   - Produtividade média territorial: 1,73 kg de Au por hectare de cava diretamente impactado;
+   - Área de desmatamento direto (cava de 2,5 m): ${fmtDec2.format(hectaresDirect)} hectares;
+   - Área total de desmatamento (incluindo transbordamento/infraestrutura indireta de 12x): ${fmtDec2.format(hectaresTotal)} hectares;
+   - Volume total de sedimentos e solo movimentado (erosão/assoreamento): ${fmtDec2.format(sedimentsM3)} m³.
+2.3. Dinâmica de Metilação e Exposição Humana (Raio de Dispersão Conservador de 100 km = 188.496 habitantes):
+   - Carga de mercúrio lançada diretamente nos rios (13%): ${fmtDec2.format(riverHgG)} g de Hg;
+   - Quantidade de mercúrio que se transforma em Metilmercúrio (MeHg) e entra na cadeia trófica aquática: ${fmtDec2.format(meHgEngineG)} g de MeHg pelo coeficiente interno da calculadora (11% do Hg fluvial = 1,43% do Hg total) [ou ${fmtDec2.format(meHgTextG)} g considerando a taxa textual de 3% sobre o despejo fluvial]. O MeHg permanece ativo por cerca de 100 anos nos ecossistemas aquáticos (COSTA; COSTA, 2023; ALMEIDA; MATTA; VIANA, 2026), sofrendo biomagnificação de até 10⁶ vezes nos peixes (WASSERMAN et al., 2001) e apresentando ~95% de absorção gastrointestinal humana e transporte placentário/hematoencefálico via carreador LAT-1 (VIEIRA; MOURA, 2026; FARIAS et al., 2026);
+   - População potencialmente exposta ao risco de contaminação através do consumo de peixes: ${popExposed.toLocaleString('pt-BR')} pessoa(s);
+   - Nível médio de contaminação de mercúrio no cabelo pela ingestão de peixes: 10,27 µg/g (acima do limite de tolerância de 6,0 µg/g e mais de 5 vezes superior ao limite de segurança de 2,0 µg/g da OMS — MARTOREDJO et al., 2024; ABIN; FBSP; MMA, 2025);
+   - Nascidos vivos com perda de QI maior que 2 pontos: 52% da coorte exposta (VASCONCELLOS et al., 2018; OLIVEIRA et al., 2021);
+   - Desfechos cardiovasculares (probabilidade 69% e 35% maior na população exposta): ${infarctCases} pessoa(s) com risco de infarto agudo do miocárdio e ${hypertCases} pessoa(s) com risco de hipertensão arterial.
+
+3. DECOMPOSIÇÃO DOS IMPACTOS MONETÁRIOS (ESPELHO EXATO DAS PÁGINAS 1 A 4 DA CALCULADORA CSF)
+3.1. BLOCO A — CONTAMINAÇÃO POR MERCÚRIO (Página 4 do Relatório CSF): ${fmtBRL.format(costHgTotal)}
+   - Doenças Cardiovasculares (Infarto Agudo e Hipertensão Arterial): ${fmtBRL.format(costHgCardio)} (87,71% do dano do Hg)
+   - Remediação do Solo Contaminado (8,8% de deposição edáfica): ${fmtBRL.format(costHgSoil)} (11,30% do dano do Hg)
+   - Perda de QI em Fetos (Neurotoxicidade Pré-Natal): ${fmtBRL.format(costHgIq)} (0,99% do dano do Hg)
+
+3.2. BLOCO B — DESMATAMENTO DA LAVRA VIABILIZADA (${fmtDec2.format(hectaresTotal)} ha - Página 2 do Relatório CSF): ${fmtBRL.format(costDefTotal)}
+   - Reflorestamento / Recuperação Florestal: ${fmtBRL.format(costDefReflor)}
+   - Perda de Estoque de Carbono (Regulação Climática): ${fmtBRL.format(costDefCarbon)}
+   - Produtos Florestais Madeireiros e Não-Madeireiros: ${fmtBRL.format(costDefProd)}
+   - Bioprospecção: ${fmtBRL.format(costDefBio)}
+   - Recreação e Beleza Cênica: ${fmtBRL.format(costDefRec)}
+   - Cultura e Espécies: ${fmtBRL.format(costDefCult)}
+
+3.3. BLOCO C — ASSOREAMENTO DOS RIOS (${fmtDec2.format(sedimentsM3)} m³ - Página 3 do Relatório CSF): ${fmtBRL.format(costSiltTotal)}
+   - Dragagem de Sedimentos no Rio: ${fmtBRL.format(costSiltDredge)}
+   - Aterramento de Cava: ${fmtBRL.format(costSiltPit)}
+   - Controle de Erosão / Perda de Serviços Hídricos: ${fmtBRL.format(costSiltErosion)}
+
+4. SÍNTESE CONCLUSIVA DOS TRÊS NÍVEIS DE VALORAÇÃO (PÁGINA 1 DO RELATÓRIO CSF)
+- NÍVEL 1 — DANO ESTRITO DA CONTAMINAÇÃO POR MERCÚRIO (Bloco A): ${fmtBRL.format(costHgTotal)} (R$ 298,42 por grama de Hg).
+- NÍVEL 2 — VALOR TOTAL EM IMPACTOS SOCIOAMBIENTAIS (Blocos A + B + C): ${fmtBRL.format(costSocioEnvTotal)} (R$ 495,26 por grama de Hg ou R$ 1.287,67 por grama de ouro).
+- NÍVEL 3 — DANO TOTAL EM VALORES MONETÁRIOS (Impactos Socioambientais + Valor do Ouro Extraído Ilegalmente de ${fmtBRL.format(costGoldExtracted)}): ${fmtBRL.format(costTotalWithGold)} (R$ 776,02 por grama de Hg ou R$ 2.017,64 por grama de ouro).
+- ESCOPO ADOTADO COMO REFERÊNCIA PRINCIPAL NESTA PERÍCIA (${scopeTitleReport}): ${fmtBRL.format(selectedTotal)}.
+- ASSIMETRIA ECONÔMICA DO ILÍCITO: O valor comercial clandestino estimado para os ${fmtNum.format(massKg)} kg de mercúrio (${fmtBRL.format(commercialValue)}) representa apenas ${fmtDec2.format(hgToGoldCostPct)}% do valor do ouro extraído ilegalmente (${fmtBRL.format(costGoldExtracted)}), mas gera um passivo imposto à sociedade ${ratioMultiplier.toLocaleString('pt-BR')} vezes superior ao valor da venda clandestina do insumo.
+
+5. REFERÊNCIAS BIBLIOGRÁFICAS E TÉCNICAS FUNDAMENTADORAS
+- ABIN; FBSP; MMA. Mercúrio na Amazônia: redes criminosas transnacionais. Brasília/São Paulo: FBSP, out. 2025.
+- ALMEIDA, V. H.; MATTA, J. F.; VIANA, V. S. Mercúrio, garimpo ilegal e contaminação das águas amazônicas: vulnerabilidade socioambiental e insuficiência estatal na proteção ambiental. REASE, v. 12, n. 7, p. 1-19, 2026.
+- BAKKER, L. B.; GASPARINETTI, P.; QUEIROZ, J. M.; VASCONCELLOS, A. C. S. Economic impacts on human health resulting from the use of mercury in the illegal gold mining in the Brazilian Amazon: a methodological assessment. Int. J. Environ. Res. Public Health, v. 18, n. 22, 11869, 2021.
+- FARIAS, E. S. et al. Os impactos do garimpo na saúde dos povos indígenas da Amazônia. Pará Research Medical Journal (PRMJ), v. 10, e940, p. 1-9, 2026.
+- GASPARINETTI, P.; BAKKER, L.; QUEIROZ, J.; VILELA, T.; LOBO, F.; NAGEL, G. Metodologia de Valoração de Impactos do Garimpo Ilegal de Ouro na Amazônia. Conservação Estratégica (CSF), Série Técnica 53, 2021.
+- GASPARINETTI, P.; BAKKER, L.; QUEIROZ, J.; VILELA, T. Economic valuation of artisanal small-scale gold mining impacts: A framework for value transfer application. 2024.
+- LARA, J. T.; SILVA, A. F. C. Minamata Tropical: mercúrio, mineração de ouro e ecologia na Amazônia brasileira (1985-2000). Revista de História (USP), n. 185, a09825, p. 1-32, 2026.
+- MARTOREDJO, I. et al. Trends in Mercury Contamination Distribution among Human and Fish Populations in the Amazon Region over the Past 30 Years: A Systematic Review. Toxics, v. 12, n. 204, p. 1-28, 2024.
+- PINHEIRO, L. S. et al. Ecological Impacts of Mining in the Amazon: Thematic Trends and Research Gaps. Environmental Management, v. 76, n. 112, p. 1-13, 2026.
+- QUEIROZ, J.; GASPARINETTI, P.; BAKKER, L.; LOBO, F.; NAGEL, G. Socioeconomic cost of dredge boat gold mining in the Tapajós basin, eastern Amazon. Resources Policy, v. 79, 103102, 2022.
+- VASCONCELLOS, A. C. S. et al. Burden of Mild Mental Retardation attributed to prenatal methylmercury exposure in Amazon: local and regional estimates. Ciência & Saúde Coletiva, v. 23, n. 11, p. 3535-3545, 2018.
+- VIEIRA, L. C.; MOURA, D. J. Metilmercúrio em pescados da Amazônia brasileira: biomarcadores de exposição, neurotoxicidade e riscos à saúde de populações tradicionais. Revista Tópicos, v. 4, n. 29, p. 1-46, 2026.`;
+            }
+        }
+
+        // Event Listeners
+        inputMass.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (!isNaN(val) && val >= 0) {
+                if (state.unit === 'kg') {
+                    state.massKg = val;
+                    sliderMass.value = Math.min(1000, state.massKg);
+                } else if (state.unit === 'g') {
+                    state.massKg = val / 1000;
+                    sliderMass.value = Math.min(1000000, val);
+                } else {
+                    state.massKg = (val * HG_DENSITY_G_CM3) / 1000;
+                    sliderMass.value = Math.min(100000, val);
+                }
+                calculateAndRender();
+            } else {
+                state.massKg = 0;
+                calculateAndRender();
+            }
+        });
+
+        sliderMass.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (state.unit === 'kg') {
+                state.massKg = val;
+                inputMass.value = Number(val.toFixed(2));
+            } else if (state.unit === 'g') {
+                state.massKg = val / 1000;
+                inputMass.value = Math.round(val);
+            } else {
+                state.massKg = (val * HG_DENSITY_G_CM3) / 1000;
+                inputMass.value = Number(val.toFixed(1));
+            }
+            calculateAndRender();
+        });
+
+        unitKgBtn.addEventListener('click', () => setUnit('kg'));
+        unitGBtn.addEventListener('click', () => setUnit('g'));
+        unitMlBtn.addEventListener('click', () => setUnit('ml'));
+
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const kgVal = parseFloat(btn.getAttribute('data-kg'));
+                state.massKg = kgVal;
+                if (state.unit === 'kg') {
+                    inputMass.value = Number(kgVal.toFixed(4));
+                    sliderMass.value = Math.min(1000, kgVal);
+                } else if (state.unit === 'g') {
+                    const gVal = kgVal * 1000;
+                    inputMass.value = Number(gVal.toFixed(1));
+                    sliderMass.value = Math.min(1000000, gVal);
+                } else {
+                    const mlVal = (kgVal * 1000) / HG_DENSITY_G_CM3;
+                    inputMass.value = Number(mlVal.toFixed(2));
+                    sliderMass.value = Math.min(100000, mlVal);
+                }
+                calculateAndRender();
+            });
+        });
+
+        scopeHgOnlyBtn.addEventListener('click', () => setScope('hg_only'));
+        scopeSocioEnvBtn.addEventListener('click', () => setScope('socioenv'));
+        scopeTotalWithGoldBtn.addEventListener('click', () => setScope('total_with_gold'));
+
+        inputRatio.addEventListener('input', (e) => {
+            state.hgAuRatio = parseFloat(e.target.value);
+            ratioBadge.textContent = `${state.hgAuRatio.toFixed(2).replace('.', ',')} : 1`;
+            calculateAndRender();
+        });
+
+        chkRoundGold.addEventListener('change', (e) => {
+            state.roundGoldGrams = e.target.checked;
+            calculateAndRender();
+        });
+
+        selectMethylBasis.addEventListener('change', (e) => {
+            state.methylationRate = parseFloat(e.target.value);
+            calculateAndRender();
+        });
+
+        inputMarketPrice.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            state.marketPricePerKg = (!isNaN(val) && val >= 0) ? val : 0;
+            calculateAndRender();
+        });
+
+        selectMarketPreset.addEventListener('change', (e) => {
+            const val = parseFloat(e.target.value);
+            state.marketPricePerKg = val;
+            inputMarketPrice.value = val;
+            calculateAndRender();
+        });
+
+        reportModeSelect.addEventListener('change', (e) => {
+            state.reportMode = e.target.value;
+            calculateAndRender();
+        });
+
+        // Live API & Macro Parameters Listeners
+        inputUsdBrl.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (!isNaN(val) && val > 0) {
+                state.usdBrl = val;
+                calculateAndRender();
+            }
+        });
+
+        inputGoldBrlG.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (!isNaN(val) && val > 0) {
+                state.goldPriceBrlG = val;
+                calculateAndRender();
+            }
+        });
+
+        inputInflationPct.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            if (!isNaN(val) && val >= 0) {
+                state.inflationPct = val;
+                calculateAndRender();
+            }
+        });
+
+        function lockPdfSnapshot() {
+            state.usdBrl = REF_USD_BRL;
+            state.goldPriceBrlG = REF_GOLD_PRICE_BRL_G;
+            state.inflationPct = REF_INFLATION_PCT;
+            inputUsdBrl.value = REF_USD_BRL.toFixed(4);
+            inputGoldBrlG.value = REF_GOLD_PRICE_BRL_G.toFixed(2);
+            inputInflationPct.value = REF_INFLATION_PCT.toFixed(2);
+            apiStatusDot.className = 'w-2 h-2 rounded-full bg-emerald-400';
+            apiStatusMessage.textContent = 'Status: Calibrado com a cotação exata do PDF da CSF (Ouro: R$ 729,97/g | Câmbio ref.: R$ 5,1305/US$ | Inflação: 19,14%).';
+            calculateAndRender();
+        }
+
+        btnLockPdfSnapshot.addEventListener('click', lockPdfSnapshot);
+
+        // Format Date for BCB Olinda PTAX API ('MM-DD-YYYY')
+        function formatBcbDate(dateObj) {
+            const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const dd = String(dateObj.getDate()).padStart(2, '0');
+            const yyyy = dateObj.getFullYear();
+            return `${mm}-${dd}-${yyyy}`;
+        }
+
+        // Fetch Live Quotes from BCB PTAX + World Bank Inflation + GoldAPI / MetalpriceAPI / Public Spot XAU
+        async function fetchLiveMarketData() {
+            btnFetchApiText.textContent = 'Consultando...';
+            apiStatusDot.className = 'w-2 h-2 rounded-full bg-amber-400 animate-ping';
+            apiStatusMessage.textContent = 'Consultando APIs (Banco Central do Brasil, Banco Mundial e Cotação Internacional XAU/USD)...';
+
+            const sourcesUsed = [];
+            let liveUsdBrl = state.usdBrl;
+            let liveGoldUsdOz = null;
+            let liveGoldBrlG = null;
+
+            // 1. Fetch USD/BRL from Banco Central do Brasil (Olinda PTAX API - last 7 days to handle weekends/holidays)
+            try {
+                const endDate = new Date();
+                const startDate = new Date();
+                startDate.setDate(endDate.getDate() - 7);
+                const bcbUrl = `https://olinda.bcb.gov.br/olinda/servico/PTAX/versao/v1/odata/CotacaoDolarPeriodo(dataInicial=@dataInicial,dataFinalCotacao=@dataFinalCotacao)?@dataInicial='${formatBcbDate(startDate)}'&@dataFinalCotacao='${formatBcbDate(endDate)}'&$top=1&$orderby=dataHoraCotacao%20desc&$format=json&$select=cotacaoCompra,cotacaoVenda,dataHoraCotacao`;
+                const resBcb = await fetch(bcbUrl);
+                if (resBcb.ok) {
+                    const dataBcb = await resBcb.json();
+                    if (dataBcb && dataBcb.value && dataBcb.value.length > 0) {
+                        liveUsdBrl = parseFloat(dataBcb.value[0].cotacaoCompra);
+                        state.usdBrl = liveUsdBrl;
+                        inputUsdBrl.value = liveUsdBrl.toFixed(4);
+                        sourcesUsed.push(`BCB PTAX (R$ ${liveUsdBrl.toFixed(4)})`);
+                    }
+                }
+            } catch (errBcb) {
+                // Fallback to AwesomeAPI USD-BRL if BCB Olinda is unreachable
+                try {
+                    const resAw = await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL');
+                    if (resAw.ok) {
+                        const dataAw = await resAw.json();
+                        if (dataAw && dataAw.USDBRL && dataAw.USDBRL.bid) {
+                            liveUsdBrl = parseFloat(dataAw.USDBRL.bid);
+                            state.usdBrl = liveUsdBrl;
+                            inputUsdBrl.value = liveUsdBrl.toFixed(4);
+                            sourcesUsed.push(`Câmbio Spot USD/BRL (R$ ${liveUsdBrl.toFixed(4)})`);
+                        }
+                    }
+                } catch (_) {}
+            }
+
+            // 2. Fetch World Bank Cumulative Inflation since 2022 (exact CSF methodology: indicator FP.CPI.TOTL.ZG)
+            try {
+                const wbUrl = 'https://api.worldbank.org/v2/country/BRA/indicator/FP.CPI.TOTL.ZG?date=2022:2026&format=json';
+                const resWb = await fetch(wbUrl);
+                if (resWb.ok) {
+                    const dataWb = await resWb.json();
+                    if (Array.isArray(dataWb) && Array.isArray(dataWb[1])) {
+                        // Compound annual rates from 2022 onward
+                        let compoundFactor = 1.0;
+                        let countYears = 0;
+                        dataWb[1].forEach(entry => {
+                            if (entry && entry.value !== null && !isNaN(entry.value)) {
+                                compoundFactor *= (1.0 + parseFloat(entry.value) / 100.0);
+                                countYears++;
+                            }
+                        });
+                        if (countYears > 0) {
+                            const cumInfPct = (compoundFactor - 1.0) * 100.0;
+                            state.inflationPct = cumInfPct;
+                            inputInflationPct.value = cumInfPct.toFixed(2);
+                            sourcesUsed.push(`Banco Mundial (${cumInfPct.toFixed(2)}%)`);
+                        }
+                    }
+                }
+            } catch (_) {}
+
+            // 3. Fetch Gold Price (Priority: 1. GoldAPI.io if key provided -> 2. MetalpriceAPI if key provided -> 3. Public XAU/USD API)
+            const goldApiKey = (inputGoldApiKey.value || '').trim();
+            const metalpriceKey = (inputMetalpriceKey.value || '').trim();
+
+            if (goldApiKey) {
+                try {
+                    const resGoldApi = await fetch('https://www.goldapi.io/api/XAU/USD', {
+                        headers: { 'x-access-token': goldApiKey, 'Content-Type': 'application/json' }
+                    });
+                    if (resGoldApi.ok) {
+                        const dataGold = await resGoldApi.json();
+                        if (dataGold.price_gram_24k) {
+                            liveGoldBrlG = parseFloat(dataGold.price_gram_24k) * liveUsdBrl;
+                            sourcesUsed.push('GoldAPI.io (24k)');
+                        } else if (dataGold.price) {
+                            liveGoldUsdOz = parseFloat(dataGold.price);
+                            liveGoldBrlG = (liveGoldUsdOz / TROY_OUNCE_GRAMS) * liveUsdBrl;
+                            sourcesUsed.push('GoldAPI.io (XAU/USD)');
+                        }
+                    }
+                } catch (_) {}
+            }
+
+            if (!liveGoldBrlG && metalpriceKey) {
+                try {
+                    const resMp = await fetch(`https://api.metalpriceapi.com/v1/latest?api_key=${encodeURIComponent(metalpriceKey)}&base=USD&currencies=XAU,BRL`);
+                    if (resMp.ok) {
+                        const dataMp = await resMp.json();
+                        if (dataMp && dataMp.rates) {
+                            // In MetalpriceAPI, USDXAU or 1/rates.XAU is USD per Troy Ounce
+                            const usdPerOz = dataMp.rates.USDXAU ? parseFloat(dataMp.rates.USDXAU) : (1.0 / parseFloat(dataMp.rates.XAU));
+                            if (usdPerOz > 0) {
+                                liveGoldBrlG = (usdPerOz / TROY_OUNCE_GRAMS) * liveUsdBrl;
+                                sourcesUsed.push('MetalpriceAPI');
+                            }
+                        }
+                    }
+                } catch (_) {}
+            }
+
+            // Keyless Public Gold Spot Fallback (gold-api.com or AwesomeAPI XAU-USD)
+            if (!liveGoldBrlG) {
+                try {
+                    const resPubGold = await fetch('https://api.gold-api.com/price/XAU');
+                    if (resPubGold.ok) {
+                        const dataPubGold = await resPubGold.json();
+                        if (dataPubGold && dataPubGold.price) {
+                            liveGoldUsdOz = parseFloat(dataPubGold.price);
+                            liveGoldBrlG = (liveGoldUsdOz / TROY_OUNCE_GRAMS) * liveUsdBrl;
+                            sourcesUsed.push(`Ouro Spot XAU/USD (US$ ${liveGoldUsdOz.toFixed(2)}/oz)`);
+                        }
+                    }
+                } catch (_) {}
+            }
+
+            if (!liveGoldBrlG) {
+                try {
+                    const resAwGold = await fetch('https://economia.awesomeapi.com.br/json/last/XAU-USD');
+                    if (resAwGold.ok) {
+                        const dataAwGold = await resAwGold.json();
+                        if (dataAwGold && dataAwGold.XAUUSD && dataAwGold.XAUUSD.bid) {
+                            liveGoldUsdOz = parseFloat(dataAwGold.XAUUSD.bid);
+                            liveGoldBrlG = (liveGoldUsdOz / TROY_OUNCE_GRAMS) * liveUsdBrl;
+                            sourcesUsed.push(`XAU/USD (US$ ${liveGoldUsdOz.toFixed(2)}/oz)`);
+                        }
+                    }
+                } catch (_) {}
+            }
+
+            if (liveGoldBrlG && liveGoldBrlG > 0) {
+                state.goldPriceBrlG = liveGoldBrlG;
+                inputGoldBrlG.value = liveGoldBrlG.toFixed(2);
+            }
+
+            btnFetchApiText.textContent = 'Consultar APIs Agora';
+            if (sourcesUsed.length > 0) {
+                apiStatusDot.className = 'w-2 h-2 rounded-full bg-sky-400';
+                apiStatusMessage.textContent = `Atualizado via API (${new Date().toLocaleTimeString('pt-BR')}): ${sourcesUsed.join(' | ')} → Ouro: R$ ${state.goldPriceBrlG.toFixed(2)}/g.`;
+            } else {
+                apiStatusDot.className = 'w-2 h-2 rounded-full bg-amber-400';
+                apiStatusMessage.textContent = 'Aviso: Rede/Proxy bloqueou consulta externa. Mantidos os valores atuais (editáveis manualmente acima).';
+            }
+
+            calculateAndRender();
+        }
+
+        btnFetchLiveApis.addEventListener('click', fetchLiveMarketData);
+
+        btnCopyReport.addEventListener('click', () => {
+            reportTextarea.select();
+            document.execCommand('copy');
+            copyBtnText.textContent = 'Copiado com Sucesso!';
+            setTimeout(() => {
+                copyBtnText.textContent = 'Copiar Texto';
+            }, 2200);
+        });
+
+        btnReset.addEventListener('click', () => {
+            state.massKg = 600.0;
+            state.unit = 'kg';
+            state.scope = 'socioenv';
+            state.hgAuRatio = 2.60;
+            state.roundGoldGrams = true;
+            state.methylationRate = 0.11;
+            state.marketPricePerKg = 2200;
+            state.reportMode = 'complete';
+            lockPdfSnapshot();
+
+            unitKgBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition bg-emerald-500 text-slate-950 shadow';
+            unitGBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+            unitMlBtn.className = 'px-2.5 py-1 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white';
+            unitBadge.textContent = 'kg';
+            inputMass.value = 600;
+            sliderMass.min = 0.1;
+            sliderMass.max = 1000;
+            sliderMass.step = 0.5;
+            sliderMass.value = 600;
+
+            inputRatio.value = 2.60;
+            ratioBadge.textContent = '2,60 : 1';
+            chkRoundGold.checked = true;
+            selectMethylBasis.value = '0.11';
+            inputMarketPrice.value = 2200;
+            selectMarketPreset.value = '2200';
+            reportModeSelect.value = 'complete';
+
+            setScope('socioenv');
+        });
+
+        window.onload = calculateAndRender;
+    </script>
+</body>
+</html>
